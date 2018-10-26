@@ -5,3 +5,17 @@ Description: Plugin that extends functionallity of WPForms and extraxts all entr
 Version: 1.0
 Author: Tetyana Yavorska
 */
+
+function wpforms_generate_pdf ($form_data)
+{
+require('fpdm.php');
+
+$pdf = new FPDM('template.pdf');
+$pdf->Load($form_data, false); // second parameter: false if field values are in ISO-8859-1, true if UTF-8
+$pdf->Merge();
+$pdf->Output();
+
+}
+
+add_action('wpforms_process','wpforms_generate_pdf');
+do_action('wpforms_process', $form_data);
